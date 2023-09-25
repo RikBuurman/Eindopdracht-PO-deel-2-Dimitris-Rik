@@ -15,3 +15,4 @@ my_agent = MyAgent()
 train(my_agent, 3000)
 
 save(my_agent, 'MyAgent_3000')
+test()
