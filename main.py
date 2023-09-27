@@ -1,11 +1,24 @@
-from bke import EvaluationAgent, start, can_win
+import random
+from bke import MLAgent, is_winner, opponent, RandomAgent, train_and_plot
 
-class MijnSpeler(EvaluationAgent):
-    def evaluate(self, board, my_symbol, opponent_symbol):
-        getal = 1
-        if can_win(board, opponent_symbol):
-            getal = getal - 1000
-        return getal
+class MyAgent(MLAgent):
+    def evaluate(self, board):
+        if is_winner(board, self.symbol):
+            reward = 1
+        elif is_winner(board, opponent[self.symbol]):
+            reward = -1
+        else:
+            reward = 0
+        return reward
 
-mijn_speler = MijnSpeler()
-start(player_o=mijn_speler)
+random.seed(1)
+ 
+my_agent = MyAgent(alpha=0.9, epsilon=0.1)
+random_agent = RandomAgent()
+ 
+train_and_plot(
+    agent=my_agent,
+    validation_agent=random_agent,
+    iterations=15,
+    trainings=1000,
+    validations=1000)
