@@ -1,5 +1,5 @@
+from bke import MLAgent, is_winner, opponent, RandomAgent, plot_validation, train, train_and_validate, validate
 import random
-from bke import MLAgent, is_winner, opponent, RandomAgent, plot_validation, validate, train_and_validate, train
 
 class MyAgent(MLAgent): #Class voor slimme agent (MyAgent)
     def evaluate(self, board):
@@ -15,7 +15,7 @@ random.seed(1) #Begingetal patroon (seed) vastzetten voor betere vergelijking
  
 my_agent = MyAgent(alpha=0.1, epsilon=0.1) #Hyperparameters van de slimme agent:
 #Hoe snel pakt de agent nieuwe kennis op: alpha, 
-#En hoe snel probeert de agent willekeurige acties probeert: epsilon
+#En hoe snel probeert de agent willekeurige acties: epsilon
 random_agent = RandomAgent() 
  
 train_and_validate( #Functie voor trainen van agent 
@@ -25,8 +25,11 @@ train_and_validate( #Functie voor trainen van agent
     trainings=500, #Aantal trainingen per herhaling
     validations=1000) #Aantal validatiespellen per herhaling
 
+my_agent.learning = False #Einde trainingsfase slimme agent, nu naar validatie
+
 validation_agent = RandomAgent()
 
-validation_result = validate(agent_x=my_agent, agent_o=validation_agent, iterations=1000) #Functie voor het valideren van de slimme agent
+#Functie voor het valideren van de slimme agent
+validation_result = validate(agent_x=my_agent, agent_o=validation_agent, iterations=1000)
 
-plot_validation(validation_result) #'tekenen' pie chart met resultaten
+plot_validation(validation_result) #'tekenen' pie chart met resultaten validatie
